@@ -1,0 +1,23 @@
+{
+  "name": "readyrect",
+  "version": "1.0.0",
+  "description": "a tiny server to handle url redirections",
+  "config": {
+    "port": 80,
+    "logLevels": "error,warning,info"
+  },
+  "scripts": {
+    "start": "node server",
+    "debug": "node --debug-brk server.js"
+  },
+  "keywords": [
+    "redirect"
+  ],
+  "author": "janouma",
+  "dependencies": {
+    "hapi": "^16.0.2"
+  },
+  "devDependencies": {
+    "standard": "^8.6.0"
+  }
+}
