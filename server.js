@@ -18,20 +18,31 @@ server.route({
   method: 'GET',
   path: '/{path*}',
   handler: function (request, reply) {
-    const url = `http://${request.info.host}${request.url.href || ''}`
+    const originalUrl = `http://${request.info.host}${request.url.href || ''}`
+    const fallbackResponse = `<h1>No redirection configured for "${originalUrl}"!</h1>`
 
     fs.stat(REDIRECTION_FILE, (error, stats) => {
       if (!error && stats.isFile()) {
         fs.readFile(REDIRECTION_FILE, (error, content) => {
           const redirections = JSON.parse(content)
-        // const targetUrl = redirections[]
+          let transformedUrl = originalUrl
+
+          for (const src of Object.keys(redirections)) {
+            transformedUrl = transformedUrl.replace(src, redirections[src])
+          }
+
+          if (transformedUrl !== originalUrl) {
+            reply.redirect(transformedUrl).permanent()
+          } else {
+            reply(fallbackResponse)
+          }
         })
       } else {
         if (error) {
           request.log('error', error)
         }
 
-        reply(`<h1>No redirection configured for "${url}"!</h1>`)
+        reply(fallbackResponse)
       }
     })
   }
