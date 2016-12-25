@@ -2,6 +2,10 @@
   "name": "readyrect",
   "version": "1.0.0",
   "description": "a tiny server to handle url redirections",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/janouma/readyrect.git"
+  },
   "config": {
     "port": 80,
     "logLevels": "error,warning,info"
